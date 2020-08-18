@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+    <title>Student Record</title>
+    <style>
+    body
+        {
+            background-image: linear-gradient(#A1FFCE,#FAFFD1);
+        }
+    
+    </style>
+</head>
+
+<body onload="ajax()">
+    <div class="container-fluid">
+
+        <div class="jumbotron mt-4">
+            <h1>Student Records</h1>
+        </div>
+        <div id="form">
+            <div class="row  mb-2">
+                <div class="col-10 col-md-8">
+                    <div class="row">
+                        <div class="col-4 col-md-3">
+                            <label for="name"><b>Student Name</b></label>
+                        </div>
+                        <div class="col-9 col-md-8">
+                            <input type="text" id="name" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-2 ">
+                <div class="col-10 col-md-8">
+                    <div class="row">
+                        <div class="col-4 col-md-3">
+                            <label class="control-label" for="name"><b>Subject</b></label>
+                        </div>
+                        <div class="col-9 col-md-8">
+                            <select name="SUBJECT" id="sub" class="form-control">
+                                <option value="">Select Subject</option>
+                                <option value="CPP">CPP</option>
+                                <option value="DBT">DBT</option>
+                                <option value="AWeP">AWeP</option>
+                                <option value="JAVA">JAVA</option>
+                                <option value="OS">OS</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-10 col-md-8">
+                    <div class="row">
+                        <div class="col-4 col-md-3">
+                            <label for="marks"><b>Student Marks</b></label>
+                        </div>
+                        <div class="col-9 col-md-8">
+                            <input type="number" id="marks" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-10 col-md-8">
+                    <div class="col-9 col-md-8">
+                        <button class="btn btn-danger btn-block" onclick="ajax('new_rec')">ADD RECORD</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <table class="table" id="main">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Student Name</th>
+                    <th>Subject</th>
+                    <th>Student Mark</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="test">
+
+            </tbody>
+        </table>
+    </div>
+</body>
+<script>
+    
+    
+    function ajax(new_rec, del_id) {
+
+        var sname = document.getElementById("name").value;
+        var sub = document.getElementById("sub").value;
+        var marks = document.getElementById("marks").value;
+        if (new_rec == undefined) {
+            new_rec = '';
+        } else if (del_id == undefined) {
+            del_id = '';
+        }
+        
+        var xml = new XMLHttpRequest();
+        xml.onreadystatechange = function() {
+            if (xml.readyState == 4 && xml.status == 200) {
+                var testdiv = document.getElementById("test");
+                testdiv.innerHTML = xml.responseText;
+            }
+        }
+        xml.open('GET', 'data.php?del_id=' + del_id + '&add_rec=' + new_rec + '&sname=' + sname + '&sub=' + sub + '&marks=' + marks, true);
+        document.getElementById("name").value = '';
+        document.getElementById("sub").value = '';
+        document.getElementById("marks").value = '';
+        xml.send();
+    }
+
+
+</script>
+
+</html>
