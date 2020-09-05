@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+</head>
+    <style>
+    .font
+        {
+            font-weight: bold;
+            margin-bottom: 20px;
+            font-family:sans-serif;
+            font-size: 16px;
+            color:brown
+        }
+    
+    </style>
+<body>
+    <div class="jumbotron jumbotron-fluid" style="background-image: linear-gradient(blue,white)">
+        <div class="container-fluid">
+            <h1 class="display-4" style=font-size: 30px>Enter City</h1>
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <div class="row">
+                        <input type="text" class="form-control mb-2" id="city">
+                        <button class="btn btn-primary" onclick="search()">SUBMIT</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="jumbotron jumbotron-fluid" style="display: none" id="jumbo">
+        <div class="container">
+            <h1 class="display-4">Weather</h1>
+            <div class="row">
+                <div class="col-3 font">NAME:</div>
+                <div id="name" class="col-2"></div>
+            </div>
+            <div class="row">
+                <div class="col-2 font">Temp:</div>
+                <div id="temp" class="col-2"></div>
+                <div class="col-2 font">Min Temp:</div>
+                <div class="col-2" id="mintemp"></div>
+                <div class="col-2 font">Max Temp:</div>
+                <div class="col-2" id="maxtemp"></div>
+            </div>
+            <div class="row">
+                <div class="col-3 font">Description:</div>
+                <div id="des" class="col-6"></div>
+            </div>
+            <div class="row">
+                <div class="col-3 font">Climate:</div>
+                <div id="main" class="col-6"></div>
+            </div>          
+              <div class="row">
+                <div class="col-3 font">Humidity:</div>
+                <div id="hu" class="col-6"></div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script>
+    function search() {
+        var xml = new XMLHttpRequest();
+        var city = document.getElementById("city").value;
+        //        var country = document.getElementById("country").value;
+
+        xml.open('GET', "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=24060611d6b664b49a70569445952941&units=metric");
+
+        xml.onreadystatechange = function() {
+            if (xml.readyState == 4 && xml.status == 200) {
+                var text = xml.responseText;
+                var final = JSON.parse(text);
+                console.log(final.weather[0]);
+                post(final);
+            }
+        }
+        xml.send();
+    }
+
+    function post(final) {
+        document.getElementById("jumbo").style.display = "block";
+        document.getElementById("des").innerHTML = final.weather[0].description;
+        document.getElementById("temp").innerHTML = final.main.temp;
+        document.getElementById("main").innerHTML = final.weather[0].main;
+        document.getElementById("name").innerHTML = final.name;
+        document.getElementById("mintemp").innerHTML = final.main.temp_min;
+        document.getElementById("maxtemp").innerHTML = final.main.temp_min;;        document.getElementById("hu").innerHTML = final.main.humidity;;
+        
+        
+        
+        
+    }
+</script></html>
