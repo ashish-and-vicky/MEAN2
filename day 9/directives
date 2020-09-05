@@ -1,0 +1,40 @@
+<p>child works!</p>
+<button (click)="callparentgreet()">Greet</button>
+<div class="demo">
+  Hello
+</div>
+<div *ngIf="1;else temp" class="bg-danger">
+  hello
+</div>
+<ng-template #temp>
+  This is template
+</ng-template>
+
+<!-- switch case -->
+
+<ul>
+  <li>HELLO</li>
+  <li>WORLD</li>
+</ul>
+<input type="text" #val>
+<button (click)="value(val.value)">click</button>
+<div *[ngSwitch]="viewmode">
+  <div *ngSwitchCase="'hello'">HELLO VIEW</div>
+  <div *ngSwitchCase="'world'">WORLD VIEW</div>
+</div>
+
+
+<!-- ---------------- -->
+<div [style.backgroundColor]="col?'red':'blue'">
+  This is expression Style
+</div>
+
+
+<!-- ngstyle -->
+<div [ngStyle]="{
+    'backgroundColor': 'green',
+    'font-size':'30px'
+}">
+  this is green
+</div>
+<!-- --------------------- -->
