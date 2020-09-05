@@ -1,0 +1,19 @@
+const mysql = require('mysql');
+
+var con = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+    port: "3306",
+    database: "meandb"
+});
+con.connect((err) => {
+    if (err) throw err;
+    console.log("Connected");
+    var sql = "Select * from members";
+    con.query(sql, (err, result) => {
+        if (err) throw err;
+        console.log(result);
+    })
+
+});
